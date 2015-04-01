@@ -7,7 +7,7 @@ var gulp           = require('gulp');
 gulp.task('views', function() {
 
   // Put our index.html in the dist folder
-  gulp.src('app/index.html')
+  gulp.src(config.views.watch)
     .pipe(gulp.dest(config.dist.root));
 
 });

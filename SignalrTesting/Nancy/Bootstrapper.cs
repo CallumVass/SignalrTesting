@@ -2,6 +2,7 @@
 using System.IO;
 using Nancy;
 using Nancy.Bootstrapper;
+using Nancy.Conventions;
 using Nancy.Responses.Negotiation;
 using Nancy.TinyIoc;
 
@@ -12,6 +13,13 @@ namespace SignalrTesting.Nancy
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             Conventions.ViewLocationConventions.Add((viewName, model, context) => string.Concat(@"Nancy/Views/", viewName));
+        }
+
+        protected override void ConfigureConventions(NancyConventions nancyConventions)
+        {
+            base.ConfigureConventions(nancyConventions);
+
+            nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("build"));
         }
 
         protected override NancyInternalConfiguration InternalConfiguration

@@ -1,3 +1,5 @@
+require("signalr");
+
 module.exports = function (ngModule) {
     ngModule.directive("signalr", function () {
         return {

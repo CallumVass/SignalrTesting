@@ -1,10 +1,8 @@
-require("signalr");
-
 module.exports = function (ngModule) {
-    ngModule.directive("signalr", function () {
+    ngModule.directive("signalr", function (signalrHubProxy) {
         return {
             restrict: "E",
-            template: "<div>Hello There</div>"
+            template: require("./signalr.html")
         };
     });
 };

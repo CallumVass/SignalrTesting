@@ -19,4 +19,5 @@ ngModule.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 });
 
-require("./directives/index")(ngModule);
+require("./services")(ngModule);
+require("./directives")(ngModule);

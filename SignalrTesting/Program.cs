@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
+using Nancy;
 using Nancy.Owin;
 using Owin;
 using SignalrTesting.Nancy;
@@ -27,13 +28,15 @@ namespace SignalrTesting
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
-            app.UseNancy(Configuration);
-            app.MapSignalR();
+            app.UseNancy(Configuration)
+                .MapSignalR();
         }
 
         private static void Configuration(NancyOptions nancyOptions)
         {
             nancyOptions.Bootstrapper = new Bootstrapper();
+            nancyOptions.PerformPassThrough = context =>
+                context.Response.StatusCode == HttpStatusCode.NotFound;
         }
     }
 }

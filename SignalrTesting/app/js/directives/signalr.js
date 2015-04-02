@@ -3,6 +3,6 @@ module.exports = function (ngModule) {
         return {
             restrict: "E",
             template: "<div>Hello There</div>"
-        }
+        };
     });
 };

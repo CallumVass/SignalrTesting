@@ -10,7 +10,6 @@ module.exports = function (ngModule) {
                 var client = signalRHubProxy('myHub', {logging: true});
 
                 client.on('sendData', function(data) {
-                    console.log(data);
                     vm.currentTime = data;
                 });
             }

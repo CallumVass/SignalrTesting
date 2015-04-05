@@ -7,9 +7,7 @@ module.exports = function (ngModule) {
             var proxy = connection.createHubProxy(hubName);
             connection.start(startOptions).done(function () {
             });
-
-            console.log(connection);
-
+            
             return {
                 on: function (eventName, callback) {
                     proxy.on(eventName, function (result) {

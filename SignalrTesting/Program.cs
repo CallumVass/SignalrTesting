@@ -1,10 +1,17 @@
 ﻿using System;
+using System.Runtime.Remoting.Contexts;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Client;
+using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
 using Nancy;
 using Nancy.Owin;
 using Owin;
 using SignalrTesting.Nancy;
+using SignalrTesting.SignalR.Hubs;
 
 namespace SignalrTesting
 {
@@ -18,6 +25,28 @@ namespace SignalrTesting
             {
                 Console.WriteLine("Running on {0}", url);
                 Console.WriteLine("Press enter to exit");
+
+                var hubConnection = new HubConnection("http://localhost:10000");
+                var hubProxy = hubConnection.CreateHubProxy("MyHub");
+
+                hubConnection.Start().ContinueWith(task =>
+                {
+                    if (!task.IsFaulted)
+                        Console.WriteLine("Connected");
+                    else
+                        Console.WriteLine(task.Exception.GetBaseException());
+                }).Wait();
+
+                hubProxy.On<DateTime>("sendData", x =>
+                    Console.WriteLine(x));
+
+                var timer = new Timer(x =>
+                {
+                    hubProxy.Invoke("Send").Wait();
+
+                }, null, 0, 2000);
+
+
                 Console.ReadLine();
             }
         }

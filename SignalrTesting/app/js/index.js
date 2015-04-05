@@ -19,5 +19,6 @@ ngModule.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 });
 
+require("./config")(ngModule);
 require("./services")(ngModule);
 require("./directives")(ngModule);

@@ -1,3 +1,3 @@
 module.exports = function (ngModule) {
-    require("./signalrHubProxy")(ngModule);
+    require("./signalRHubProxy")(ngModule);
 };

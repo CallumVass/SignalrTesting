@@ -12,8 +12,8 @@ gulp.task('watch', function () {
             livereload: true,
             proxies: [
                 {
-                    source: '/site',
-                    target: 'http://localhost:10000/site'
+                    source: '/',
+                    target: 'http://localhost:10000'
                 }
             ]
         }));

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using Microsoft.AspNet.SignalR.Client;
-using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
 using Nancy.Owin;
@@ -15,7 +14,7 @@ namespace SignalrTesting
     {
         static void Main(string[] args)
         {
-            var url = "http://localhost:10000";
+            const string url = "http://localhost:10000";
             using (WebApp.Start(url))
             {
                 Console.WriteLine("Server running on {0}", url);

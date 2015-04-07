@@ -3,42 +3,42 @@ using System.Linq;
 
 namespace SignalrTesting.SignalR
 {
-    public class ConnectionMapping<T>
+    public class ConnectionMapping
     {
-        private readonly List<string> _connections =
+        private static readonly List<string> Connections =
             new List<string>();
 
-        public int Count
+        public static int Count
         {
             get
             {
-                return _connections.Count;
+                return Connections.Count;
             }
         }
 
-        public void Add(string connectionId)
+        public static void Add(string connectionId)
         {
-            lock (_connections)
+            lock (Connections)
             {
-                if (_connections.All(x => x != connectionId))
+                if (Connections.All(x => x != connectionId))
                 {
-                    _connections.Add(connectionId);
+                    Connections.Add(connectionId);
                 }
             }
         }
 
-        public IEnumerable<string> GetConnections()
+        public static IEnumerable<string> GetConnections()
         {
-            return _connections;
+            return Connections;
         }
 
-        public void Remove(string connectionId)
+        public static void Remove(string connectionId)
         {
-            lock (_connections)
+            lock (Connections)
             {
-                if (_connections.Any(x => x == connectionId))
+                if (Connections.Any(x => x == connectionId))
                 {
-                    _connections.Remove(connectionId);
+                    Connections.Remove(connectionId);
                 }
             }
         }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading;
 using Microsoft.AspNet.SignalR.Client;
+using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
-using Nancy;
 using Nancy.Owin;
 using Owin;
 using SignalrTesting.Nancy;
+using SignalrTesting.SignalR;
 
 namespace SignalrTesting
 {
@@ -14,14 +15,12 @@ namespace SignalrTesting
     {
         static void Main(string[] args)
         {
-            const string url = "http://+:10000";
-
-            using (WebApp.Start<Startup>(url))
+            var url = "http://localhost:10000";
+            using (WebApp.Start(url))
             {
-                Console.WriteLine("Running on {0}", url);
-                Console.WriteLine("Press enter to exit");
+                Console.WriteLine("Server running on {0}", url);
 
-                var hubConnection = new HubConnection("http://localhost:10000");
+                var hubConnection = new HubConnection(url);
                 var hubProxy = hubConnection.CreateHubProxy("MyHub");
 
                 hubConnection.Start().ContinueWith(task =>
@@ -32,15 +31,13 @@ namespace SignalrTesting
                         Console.WriteLine(task.Exception.GetBaseException());
                 }).Wait();
 
-                hubProxy.On<DateTime>("sendData", x =>
-                    Console.WriteLine(x));
-
                 var timer = new Timer(x =>
                 {
+                    if (ConnectionMapping.Count <= 1) return;
+
+                    Console.WriteLine("Connections: {0}", ConnectionMapping.Count);
                     hubProxy.Invoke("Send").Wait();
-
                 }, null, 0, 2000);
-
 
                 Console.ReadLine();
             }
@@ -52,15 +49,13 @@ namespace SignalrTesting
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
-            app.UseNancy(Configuration)
+            app.Map("/site", x => x.UseNancy(Configuration))
                 .MapSignalR();
         }
 
         private static void Configuration(NancyOptions nancyOptions)
         {
             nancyOptions.Bootstrapper = new Bootstrapper();
-            nancyOptions.PerformPassThrough = context =>
-                context.Response.StatusCode == HttpStatusCode.NotFound;
         }
     }
 }

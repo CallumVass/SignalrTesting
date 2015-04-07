@@ -19,7 +19,7 @@ namespace SignalrTesting
             {
                 Console.WriteLine("Server running on {0}", url);
 
-                var hubConnection = new HubConnection(url + "/s");
+                var hubConnection = new HubConnection(url);
                 var hubProxy = hubConnection.CreateHubProxy("MyHub");
 
                 hubConnection.Start().ContinueWith(task =>
@@ -47,11 +47,9 @@ namespace SignalrTesting
     {
         public void Configuration(IAppBuilder app)
         {
-            app.Map("/s", x =>
-            {
-                x.UseCors(CorsOptions.AllowAll);
-                x.MapSignalR();
-            })
+            app
+                .UseCors(CorsOptions.AllowAll)
+                .MapSignalR()
                 .UseNancy(Configuration);
         }
 

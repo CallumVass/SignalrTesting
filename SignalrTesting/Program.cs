@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Runtime.Remoting.Contexts;
 using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Client;
-using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
 using Nancy;
 using Nancy.Owin;
 using Owin;
 using SignalrTesting.Nancy;
-using SignalrTesting.SignalR.Hubs;
 
 namespace SignalrTesting
 {

@@ -13,10 +13,7 @@ module.exports = function (ngModule) {
                     vm.currentTime = data;
                 });
 
-                console.log(client.connection);
-
                 client.connection.disconnected(function () {
-                    console.log("Connection closed. Retrying...");
                     setTimeout(function () {
                         client.connection.start();
                     }, 5000);

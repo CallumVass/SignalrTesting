@@ -9,8 +9,17 @@ module.exports = function (ngModule) {
                 vm.currentTime = '';
                 var client = signalRHubProxy('myHub', {logging: true});
 
-                client.on('sendData', function(data) {
+                client.on('sendData', function (data) {
                     vm.currentTime = data;
+                });
+
+                console.log(client.connection);
+
+                client.connection.disconnected(function () {
+                    console.log("Connection closed. Retrying...");
+                    setTimeout(function () {
+                        client.connection.start();
+                    }, 5000);
                 });
             }
         };

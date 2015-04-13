@@ -18,6 +18,20 @@ module.exports = function (ngModule) {
                         client.connection.start();
                     }, 5000);
                 });
+
+                vm.stop = stop;
+                vm.start = start;
+
+                function stop() {
+                    client.off('sendData');
+                    vm.currentTime = "Stopped";
+                }
+
+                function start() {
+                    client.on('sendData', function (data) {
+                        vm.currentTime = data;
+                    });
+                }
             }
         };
     });

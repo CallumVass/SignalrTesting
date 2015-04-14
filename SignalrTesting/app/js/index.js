@@ -1,4 +1,4 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
 // most jQuery plugins don't work unless jQuery is on the window as well :-/
 window.$ = window.jQuery = $;
@@ -6,7 +6,7 @@ window.$ = window.jQuery = $;
 require("angular");
 require("angular-ui-router");
 
-var ngModule = angular.module("app", ["ui.router"]);
+const ngModule = angular.module("app", ["ui.router"]);
 
 ngModule.config(function ($stateProvider, $urlRouterProvider) {
 

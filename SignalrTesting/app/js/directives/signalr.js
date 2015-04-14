@@ -1,4 +1,4 @@
-module.exports = function (ngModule) {
+export default ngModule => {
     ngModule.directive("signalr", function (signalRHubProxy) {
         return {
             restrict: "E",

@@ -1,6 +1,6 @@
 require("signalr");
 
-module.exports = function (ngModule) {
+export default ngModule => {
     ngModule.factory('signalRHubProxy', function ($rootScope, signalRServer) {
         function signalRHubProxyFactory(hubName, startOptions) {
             var connection = $.hubConnection(signalRServer);

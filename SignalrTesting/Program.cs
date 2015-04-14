@@ -34,7 +34,7 @@ namespace SignalrTesting
                 {
                     if (ConnectionMapping.Count <= 1) return;
 
-                    Console.WriteLine("Connections: {0}", ConnectionMapping.Count);
+                    Console.WriteLine("{0} - Connections: {1}", DateTime.Now, ConnectionMapping.Count);
                     hubProxy.Invoke("Send").Wait();
                 }, null, 0, 2000);
 

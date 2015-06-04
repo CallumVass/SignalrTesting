@@ -55,6 +55,10 @@ function buildScript(file) {
 
     gutil.log('Rebundle...');
 
+    // move d3 - hack
+    gulp.src("bower_components/d3/d3.js")
+        .pipe(gulp.dest("build/lib/"));
+
     return stream.on('error', handleErrors)
       .pipe(source(file))
       .pipe(gulpif(createSourcemap, buffer()))
